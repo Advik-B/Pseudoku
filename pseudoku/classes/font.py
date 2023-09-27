@@ -24,4 +24,3 @@ class Font:
 
     def render(self, text: str, background: Colour, antialias: bool=True) -> PGfont:
         return self.pg_font.render(text, antialias, self.colour.rgb, background.rgb)
-
