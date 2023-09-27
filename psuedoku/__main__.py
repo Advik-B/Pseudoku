@@ -10,7 +10,7 @@ CELL_SIZE = WINDOW_SIZE // GRID_SIZE
 # Define colors
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
-
+GREEN = (0, 200, 0)
 
 class Cell:
     def __init__(self, row, col, value=0):
@@ -21,14 +21,17 @@ class Cell:
 
     def draw(self, screen):
         font = pygame.font.Font(None, 36)
-        text = font.render(str(self.value) if self.value != 0 else "", True, BLACK)
+        if self.value != 0:
+            text = font.render(str(self.value), True, BLACK)
+        else:
+            text = font.render("", True, BLACK)
         screen.blit(text, (self.col * CELL_SIZE + 15, self.row * CELL_SIZE + 15))
 
 
 class SudokuGrid:
     def __init__(self):
-        self.grid = [[Cell(row, col) for col in range(GRID_SIZE)] for row in range(GRID_SIZE)]
-        self.generate_sudoku()
+        self.grid_ = [[Cell(row, col) for col in range(GRID_SIZE)] for row in range(GRID_SIZE)]
+        self.grid_ = self.generate_sudoku()
 
     def generate_sudoku(self):
         grid = [[0 for _ in range(GRID_SIZE)] for _ in range(GRID_SIZE)]
@@ -39,6 +42,7 @@ class SudokuGrid:
             row, col = random.randint(0, GRID_SIZE - 1), random.randint(0, GRID_SIZE - 1)
             grid[row][col] = 0
 
+        print(grid)
         return grid
 
     def solve(self, grid):
@@ -62,9 +66,9 @@ class SudokuGrid:
             pygame.draw.line(screen, BLACK, (0, i * CELL_SIZE), (WINDOW_SIZE, i * CELL_SIZE), 2)
             pygame.draw.line(screen, BLACK, (i * CELL_SIZE, 0), (i * CELL_SIZE, WINDOW_SIZE), 2)
 
-        for row in self.grid:
+        for row in self.grid_:
             for cell in row:
-                cell.draw(screen)
+                cell.draw(screen)  # Corrected to call the Cell's draw method
 
     def is_valid(self, grid, row, col, num):
         for i in range(GRID_SIZE):
