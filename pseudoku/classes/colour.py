@@ -7,13 +7,11 @@ class Colour:
 
     @staticmethod
     def from_hex(hex: str) -> "Colour":
-        rgb = tuple(int(hex.casefold()[1:][i:i + 2], 16) for i in (0, 2, 4))
-        return Colour(rgb, hex.casefold())
+        return Colour(tuple(int(hex.casefold()[1:][i:i + 2], 16) for i in (0, 2, 4)), hex.casefold())
 
     @staticmethod
     def from_rgb(rgb: tuple[int, int, int]) -> "Colour":
-        hex = "#"+"".join(f"{c:02x}" for c in rgb)
-        return Colour(rgb, hex)
+        return Colour(rgb, "#"+"".join(f"{c:02x}" for c in rgb))
 
 
     @staticmethod
