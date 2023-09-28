@@ -36,4 +36,4 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test the Pseudoku classes
       run: |
-        find . -type f -name "*.py" -exec pytest {} +
+        find . -type f -name "*.py" -exec pytest --ignore=__init__.py --ignore=__main__.py {} +
