@@ -98,3 +98,5 @@ class Colour:
 
     to_rgb = lambda self: self.rgb
     to_dict = lambda self: {"hex": self.hex, "rgb": self.rgb}
+    to_hsv = lambda self: self.hsv
+    to_hex = lambda self: self.hex
