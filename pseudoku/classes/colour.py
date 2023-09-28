@@ -28,10 +28,6 @@ class Colour:
     def from_hsv(hsv: tuple[int, int, int]) -> "Colour":
         return Colour.from_rgb(Colour.hsv_to_rgb(hsv))
 
-    @staticmethod
-    @overload
-    def from_hsv(h: int, s: int, v: int) -> "Colour":
-        return Colour.from_hsv((h, s, v))
 
     @staticmethod
     def rgb_to_hsv(rgb: tuple[int, int, int]) -> tuple[int, int, int]:
@@ -119,4 +115,3 @@ class Colour:
 
     def get_split_complementary(self) -> tuple["Colour", "Colour"]:
         return Colour.from_hsv((self.hsv[0] + 150) % 360, self.hsv[1], self.hsv[2]), Colour.from_hsv((self.hsv[0] + 210) % 360, self.hsv[1], self.hsv[2])
-    
