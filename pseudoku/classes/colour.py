@@ -10,7 +10,7 @@ class Colour:
 
     @staticmethod
     def from_hex(hex: str) -> "Colour":
-        return Colour(tuple(int(hex.upper()[1:][i:i + 2], 16) for i in (0, 2, 4)), hex.upper())
+        return Colour(tuple(int(hex.casefold()[1:][i:i + 2], 16) for i in (0, 2, 4)), hex.casefold())
 
     @staticmethod
     def from_rgb(rgb: tuple[int, int, int]) -> "Colour":
