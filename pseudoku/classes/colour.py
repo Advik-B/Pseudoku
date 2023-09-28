@@ -1,10 +1,11 @@
 from dataclasses import dataclass
+from typing import overload
 
 @dataclass
 class Colour:
     rgb: tuple[int, int, int]
     hex: str
-    hsv: tuple[int, int, int] = None
+    hsv: tuple[int, int, int]
 
     def __post_init__(self):
         self.hex = self.hex.upper()
@@ -26,6 +27,11 @@ class Colour:
     @staticmethod
     def from_hsv(hsv: tuple[int, int, int]) -> "Colour":
         return Colour.from_rgb(Colour.hsv_to_rgb(hsv))
+
+    @staticmethod
+    @overload
+    def from_hsv(h: int, s: int, v: int) -> "Colour":
+        return Colour.from_hsv((h, s, v))
 
     @staticmethod
     def rgb_to_hsv(rgb: tuple[int, int, int]) -> tuple[int, int, int]:
@@ -97,6 +103,20 @@ class Colour:
         return r, g, b
 
     to_rgb = lambda self: self.rgb
-    to_dict = lambda self: {"hex": self.hex, "rgb": self.rgb}
+    to_dict = lambda self: {"hex": self.hex, "rgb": self.rgb, "hsv": self.hsv}
     to_hsv = lambda self: self.hsv
     to_hex = lambda self: self.hex
+
+
+    def get_complementary(self) -> "Colour":
+        return Colour.from_hsv((self.hsv[0] + 180) % 360, self.hsv[1], self.hsv[2])
+
+    def get_triad(self) -> tuple["Colour", "Colour"]:
+        return Colour.from_hsv((self.hsv[0] + 120) % 360, self.hsv[1], self.hsv[2]), Colour.from_hsv((self.hsv[0] + 240) % 360, self.hsv[1], self.hsv[2])
+
+    def get_analogous(self) -> tuple["Colour", "Colour"]:
+        return Colour.from_hsv((self.hsv[0] + 30) % 360, self.hsv[1], self.hsv[2]), Colour.from_hsv((self.hsv[0] + 330) % 360, self.hsv[1], self.hsv[2])
+
+    def get_split_complementary(self) -> tuple["Colour", "Colour"]:
+        return Colour.from_hsv((self.hsv[0] + 150) % 360, self.hsv[1], self.hsv[2]), Colour.from_hsv((self.hsv[0] + 210) % 360, self.hsv[1], self.hsv[2])
+    
