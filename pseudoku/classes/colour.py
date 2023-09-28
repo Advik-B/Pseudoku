@@ -5,9 +5,12 @@ class Colour:
     rgb: tuple[int, int, int]
     hex: str
 
+    def __post_init__(self):
+        self.hex = self.hex.upper()
+
     @staticmethod
     def from_hex(hex: str) -> "Colour":
-        return Colour(tuple(int(hex.casefold()[1:][i:i + 2], 16) for i in (0, 2, 4)), hex.casefold())
+        return Colour(tuple(int(hex.upper()[1:][i:i + 2], 16) for i in (0, 2, 4)), hex.upper())
 
     @staticmethod
     def from_rgb(rgb: tuple[int, int, int]) -> "Colour":
