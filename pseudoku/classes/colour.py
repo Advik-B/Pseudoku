@@ -18,6 +18,10 @@ class Colour:
     def from_dict(colour_dict: dict[str, str]) -> "Colour":
         return Colour.from_hex(colour_dict["hex"])
 
+    to_hex = lambda self: self.hex
+    to_rgb = lambda self: self.rgb
+    to_dict = lambda self: {"hex": self.hex, "rgb": self.rgb}
+
     # @staticmethod
     # def from_hsv(hsv: tuple[int, int, int]) -> "Colour":
     #     h, s, v = hsv
