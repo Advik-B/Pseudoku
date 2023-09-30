@@ -1,16 +1,15 @@
 from dataclasses import dataclass
-from typing import overload, Union, Tuple
+from typing import Union, SupportsFloat
 
 # Type aliases
-intConvertable = int | float | str
 ThreeNumbers = Union[
-    tuple[intConvertable, intConvertable, intConvertable],
-    list[intConvertable, intConvertable, intConvertable],
-    intConvertable,
+    tuple[SupportsFloat, SupportsFloat, SupportsFloat],
+    list[SupportsFloat, SupportsFloat, SupportsFloat],
+    SupportsFloat,
 ]
 
 
-def _intintuple_convert(t: tuple[intConvertable, intConvertable, intConvertable]) -> ThreeNumbers:
+def _intintuple_convert(t: tuple[SupportsFloat, SupportsFloat, SupportsFloat]) -> ThreeNumbers:
     return tuple(round(i) for i in t)
 
 
@@ -21,7 +20,7 @@ def hex_to_rgb(hex: str) -> ThreeNumbers:
     :param hex: str: Specify the hexadecimal value of the color
     :return: A tuple of integers representing the red, green and blue values of the color respectively
     """
-    return tuple(int(hex.lstrip("#")[i:i + 2], 16) for i in (0, 2, 4))
+    return tuple(float(int(hex.lstrip("#")[i:i + 2], 16)) for i in (0, 2, 4))
 
 
 def rgb_to_hex(rgb: ThreeNumbers) -> str:
