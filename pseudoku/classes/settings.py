@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from .theme import Theme
 
+
 @dataclass
 class Settings:
     width: int
@@ -13,7 +14,6 @@ class Settings:
     debug: bool = False
     version_string: str = "v0.1.0"
     version_number: tuple[int, int, int] = (0, 1, 0)
-
 
     @staticmethod
     def from_dict(settings_dict: dict[str, str]) -> "Settings":
