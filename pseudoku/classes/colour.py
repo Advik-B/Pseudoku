@@ -1,6 +1,15 @@
 from dataclasses import dataclass
 from typing import overload, Union, Tuple
-import colorsys
+
+intConvertable = int | float | str
+
+
+def _intintuple_convert(t: tuple[intConvertable, intConvertable, intConvertable]) -> tuple[int, int, int]:
+    return tuple(round(i) for i in t)
+
+
+def _floatintuple_convert(t: tuple[intConvertable, intConvertable, intConvertable]) -> tuple[float, float, float]:
+    return tuple(float(i) for i in t)
 
 
 def hex_to_rgb(hex: str) -> tuple[int, int, int]:
@@ -14,7 +23,6 @@ def hex_to_rgb(hex: str) -> tuple[int, int, int]:
 
 
 def rgb_to_hex(rgb: tuple[int, int, int]) -> str:
-
     """
     The rgb_to_hex function takes a tuple of three integers, representing the red, green and blue values of a color.
     It returns the hexadecimal representation of that color as a string.
@@ -22,17 +30,23 @@ def rgb_to_hex(rgb: tuple[int, int, int]) -> str:
     :param rgb: tuple[int: Specify the type of the parameter as a tuple of three integers representing the RGB values
     :return: A string of the hexadecimal value of the color
     """
-    return "#" + "".join(hex(c)[2:].zfill(2) for c in rgb)
+    rgb = _intintuple_convert(rgb)
+    return "#" + "".join(hex(i)[2:].zfill(2).upper() for i in rgb)
+
 
 def _3inttotuple(x: int, y: int, z: int) -> tuple[int, int, int]:
-    return (x, y, z)
+    return x, y, z
+
+
+def normalise_converted_rgb(rgb: tuple[float, float, float]) -> tuple[float, float, float]:
+    print(rgb)
+    return tuple(i / 255 for i in rgb)
+
 
 @dataclass
 class Colour:
-
     rgb: tuple[int, int, int]
     hex: str
-    hsv: tuple[int, int, int]
 
     def __post_init__(self):
         """
@@ -43,6 +57,10 @@ class Colour:
         :return: None
         """
         self.hex = self.hex.upper()
+
+        for i in range(3):
+            if not 0 <= self.rgb[i] <= 255:
+                raise ValueError("RGB values must be between 0 and 255")
 
 
     @staticmethod
@@ -68,7 +86,6 @@ class Colour:
         return Colour(
             rgb=rgb,
             hex=rgb_to_hex(rgb),
-            hsv=colorsys.rgb_to_hsv(*rgb)
         )
 
     @staticmethod
@@ -81,31 +98,6 @@ class Colour:
         """
         return Colour.from_rgb(hex_to_rgb(hex))
 
-    @staticmethod
-    def from_hsv(*args: Union[tuple[int, int, int], list[int, int, int], int]) -> "Colour":
-        """
-        The from_hsv function takes a tuple or list of three integers representing the hue, saturation and value of a
-        color. It returns a Colour object with the corresponding RGB, hexadecimal and HSV values.
-
-        :param args: Union[tuple[int, int, int], list[int, int, int], int]: Specify the type of the parameter as a list or directly as three integers
-        :return: A Colour object with the corresponding RGB, hexadecimal and HSV values
-        """
-        if len(args) == 1:
-            if isinstance(args[0], (list, tuple)):
-                hsv = args[0]
-            else:
-                raise TypeError("Invalid argument type")
-
-        elif len(args) == 3:
-            hsv = args
-        else:
-            raise TypeError(f"Expected 1 or 3 arguments, got {len(args)}")
-
-        return Colour(
-            rgb=colorsys.hsv_to_rgb(*hsv),
-            hex=rgb_to_hex(colorsys.hsv_to_rgb(*hsv)),
-            hsv=hsv
-        )
 
     @staticmethod
     def from_dict(colour_dict: dict[str, Union[str, list[int, int, int]]]) -> "Colour":
@@ -120,13 +112,10 @@ class Colour:
             return Colour(
                 rgb=colour_dict["rgb"],
                 hex=colour_dict["hex"],
-                hsv=colour_dict["hsv"]
             )
         except KeyError as e:
             raise KeyError("Colour dictionary must contain keys 'rgb', 'hex' and 'hsv'") from e
 
-
     to_rgb = lambda self: self.rgb
     to_hex = lambda self: self.hex
-    to_hsv = lambda self: self.hsv
     to_dict = lambda self: {"rgb": self.rgb, "hex": self.hex, "hsv": self.hsv}
