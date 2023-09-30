@@ -9,7 +9,8 @@ ThreeNumbers = Union[
 ]
 
 
-def _intintuple_convert(t: tuple[SupportsFloat, SupportsFloat, SupportsFloat]) -> ThreeNumbers:
+def _intintuple_convert(
+        t: tuple[SupportsFloat, SupportsFloat, SupportsFloat]) -> ThreeNumbers:
     return tuple(round(i) for i in t)
 
 
@@ -90,7 +91,8 @@ class Colour:
         return Colour.from_rgb(hex_to_rgb(hex))
 
     @staticmethod
-    def from_dict(colour_dict: dict[str, Union[str, list[int, int, int]]]) -> "Colour":
+    def from_dict(
+            colour_dict: dict[str, Union[str, list[int, int, int]]]) -> "Colour":
         """
         The from_dict function takes a dictionary with keys "rgb", "hex" as input and returns a Colour
         object with the corresponding RGB, hexadecimal.
@@ -104,8 +106,9 @@ class Colour:
                 hex=colour_dict["hex"],
             )
         except KeyError as e:
-            raise KeyError("Colour dictionary must contain keys 'rgb', 'hex'") from e
+            raise KeyError(
+                "Colour dictionary must contain keys 'rgb', 'hex'") from e
 
-    to_rgb = lambda self: self.rgb
-    to_hex = lambda self: self.hex
-    to_dict = lambda self: {"rgb": self.rgb, "hex": self.hex}
+    def to_rgb(self): return self.rgb
+    def to_hex(self): return self.hex
+    def to_dict(self): return {"rgb": self.rgb, "hex": self.hex}
