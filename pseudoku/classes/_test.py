@@ -1,8 +1,11 @@
-from .colour import Colour
 import pygame
 
 pygame.init()
 pygame.font.init()
+
+
+from .colour import Colour
+
 
 
 def test_rgb_to_hex():
