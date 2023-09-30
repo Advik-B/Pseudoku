@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from .theme import Theme
+from .theme import Theme, DEFAULT as DEFAULT_THEME
 
 
 @dataclass
@@ -37,20 +37,6 @@ class Settings:
         self.version_string = str(self.version_string)
         self.version_number = tuple(int(i) for i in self.version_number)
 
-    @staticmethod
-    @property
-    def DEFAULT() -> "Settings":
-        return Settings(
-            width=800,
-            height=600,
-            theme=Theme.DEFAULT,
-            vsync=True,
-            fps=60,
-            debug=True,
-            version_string="vUNKNOWN",
-            version_number=(0, 0, 0),
-        )
-
     def to_dict(self) -> dict[str, str]:
         return {
             "width": self.width,
@@ -62,3 +48,15 @@ class Settings:
             "version_string": self.version_string,
             "version_number": self.version_number,
         }
+
+
+DEFAULT = Settings(
+    width=800,
+    height=600,
+    theme=DEFAULT_THEME,
+    vsync=True,
+    fps=60,
+    debug=True,
+    version_string="vUNKNOWN",
+    version_number=(0, 0, 0),
+)
