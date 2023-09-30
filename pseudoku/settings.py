@@ -1,7 +1,8 @@
-from yaml import safe_load, dump
-from classes import Settings
-from base64 import b64encode, b64decode
 import os
+
+from yaml import safe_load, dump
+from .classes import Settings, settings
+from base64 import b64encode, b64decode
 from json import dumps
 
 KB = 1024
@@ -29,9 +30,9 @@ def load_settings() -> Settings:
     # Check if the file exists
     if not os.path.exists("settings.yaml"):
         # Create the file with DEFAULT settings
-        save_settings(Settings.DEFAULT)
-        set_settings_in_env(Settings.DEFAULT)
-        return Settings.DEFAULT
+        save_settings(settings.DEFAULT)
+        set_settings_in_env(settings.DEFAULT)
+        return settings.DEFAULT
 
     # Check the file size first
     if filesize := os.path.getsize("settings.yaml") > MAX_FILE_SIZE:
