@@ -9,6 +9,10 @@ from .colour import Colour
 
 
 def test_rgb_to_hex():
+    import pygame
+
+    pygame.init()
+    pygame.font.init()
     assert Colour.from_rgb((57, 0, 227)).to_hex() == "#3900E3".upper()
     assert Colour.from_rgb((183, 150, 248)).to_hex() == "#b796f8".upper()
     assert Colour.from_rgb((170, 227, 0)).to_hex() == "#aae300".upper()
@@ -16,6 +20,11 @@ def test_rgb_to_hex():
 
 
 def test_hex_to_rgb():
+    import pygame
+
+    pygame.init()
+    pygame.font.init()
+
     assert Colour.from_hex("#3900E3").to_rgb() == (57, 0, 227)
     assert Colour.from_hex("#b796f8").to_rgb() == (183, 150, 248)
     assert Colour.from_hex("#aae300").to_rgb() == (170, 227, 0)
