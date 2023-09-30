@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import overload
+from typing import overload, Union, Tuple
 
 @dataclass
 class Colour:
@@ -12,30 +12,33 @@ class Colour:
 
     @staticmethod
     def from_hex(hex: str) -> "Colour":
-        rgb = tuple(int(hex.casefold()[1:][i:i + 2], 16) for i in (0, 2, 4))
+        rgb = tuple(int(hex[i:i + 2], 16) for i in (1, 3, 5))
         return Colour(rgb, hex, Colour.rgb_to_hsv(rgb))
 
     @staticmethod
     def from_rgb(rgb: tuple[int, int, int]) -> "Colour":
         return Colour(rgb, "#"+"".join(f"{c:02x}" for c in rgb), Colour.rgb_to_hsv(rgb))
 
-
     @staticmethod
     def from_dict(colour_dict: dict[str, str]) -> "Colour":
         return Colour.from_hex(colour_dict["hex"])
 
     @staticmethod
-    def from_hsv(hsv: tuple[int, int, int]) -> "Colour":
-        return Colour.from_rgb(Colour.hsv_to_rgb(hsv))
+    def from_hsv(*args: Union[Tuple[int, int, int], int]) -> "Colour":
+        if len(args) == 1 and isinstance(args[0], tuple) and len(args[0]) == 3:
+            h, s, v = args[0]
+            return Colour.from_rgb(Colour.hsv_to_rgb((h, s, v)))
+        elif len(args) == 3:
+            h, s, v = args
+            return Colour.from_rgb(Colour.hsv_to_rgb((h, s, v)))
+        else:
+            raise TypeError("Invalid arguments, expected tuple[int, int, int] or 3 ints (h, s, v)")
+
 
 
     @staticmethod
+    @staticmethod
     def rgb_to_hsv(rgb: tuple[int, int, int]) -> tuple[int, int, int]:
-        """
-        Convert RGB to HSV
-        :param rgb:
-        :return:
-        """
         r, g, b = rgb
         r, g, b = r / 255.0, g / 255.0, b / 255.0
 
@@ -64,7 +67,6 @@ class Colour:
         v = int(max_val * 100)
 
         return h, s, v
-
 
     @staticmethod
     def hsv_to_rgb(hsv: tuple[int, int, int]) -> tuple[int, int, int]:
