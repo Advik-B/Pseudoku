@@ -50,3 +50,15 @@ class Settings:
             version_string="vUNKNOWN",
             version_number=(0, 0, 0),
         )
+
+    def to_dict(self) -> dict[str, str]:
+        return {
+            "width": self.width,
+            "height": self.height,
+            "theme": self.theme.to_dict(),
+            "vsync": self.vsync,
+            "fps": self.fps,
+            "debug": self.debug,
+            "version_string": self.version_string,
+            "version_number": self.version_number,
+        }
