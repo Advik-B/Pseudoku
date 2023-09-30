@@ -19,10 +19,8 @@ class Font:
             filename=font_dict["filename"],
             font_size=font_dict["font_size"],
             colour=Colour.from_dict(font_dict["colour"]),
-            pg_font=PGfont(font_dict["filename"], font_dict["font_size"])
+            pg_font=PGfont(font_dict["filename"], font_dict["font_size"]),
         )
 
-    def render(self, text: str, background: Colour,
-               antialias: bool = True) -> PGfont:
-        return self.pg_font.render(
-            text, antialias, self.colour.rgb, background.rgb)
+    def render(self, text: str, background: Colour, antialias: bool = True) -> PGfont:
+        return self.pg_font.render(text, antialias, self.colour.rgb, background.rgb)

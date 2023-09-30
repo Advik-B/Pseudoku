@@ -10,7 +10,8 @@ ThreeNumbers = Union[
 
 
 def _intintuple_convert(
-        t: tuple[SupportsFloat, SupportsFloat, SupportsFloat]) -> ThreeNumbers:
+    t: tuple[SupportsFloat, SupportsFloat, SupportsFloat]
+) -> ThreeNumbers:
     return tuple(round(i) for i in t)
 
 
@@ -21,7 +22,7 @@ def hex_to_rgb(hex: str) -> ThreeNumbers:
     :param hex: str: Specify the hexadecimal value of the color
     :return: A tuple of integers representing the red, green and blue values of the color respectively
     """
-    return tuple(float(int(hex.lstrip("#")[i:i + 2], 16)) for i in (0, 2, 4))
+    return tuple(float(int(hex.lstrip("#")[i : i + 2], 16)) for i in (0, 2, 4))
 
 
 def rgb_to_hex(rgb: ThreeNumbers) -> str:
@@ -91,8 +92,7 @@ class Colour:
         return Colour.from_rgb(hex_to_rgb(hex))
 
     @staticmethod
-    def from_dict(
-            colour_dict: dict[str, Union[str, list[int, int, int]]]) -> "Colour":
+    def from_dict(colour_dict: dict[str, Union[str, list[int, int, int]]]) -> "Colour":
         """
         The from_dict function takes a dictionary with keys "rgb", "hex" as input and returns a Colour
         object with the corresponding RGB, hexadecimal.
@@ -106,9 +106,13 @@ class Colour:
                 hex=colour_dict["hex"],
             )
         except KeyError as e:
-            raise KeyError(
-                "Colour dictionary must contain keys 'rgb', 'hex'") from e
+            raise KeyError("Colour dictionary must contain keys 'rgb', 'hex'") from e
 
-    def to_rgb(self): return self.rgb
-    def to_hex(self): return self.hex
-    def to_dict(self): return {"rgb": self.rgb, "hex": self.hex}
+    def to_rgb(self):
+        return self.rgb
+
+    def to_hex(self):
+        return self.hex
+
+    def to_dict(self):
+        return {"rgb": self.rgb, "hex": self.hex}

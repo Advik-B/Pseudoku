@@ -25,7 +25,7 @@ class Settings:
             fps=settings_dict["fps"],
             debug=settings_dict["debug"],
             version_string=settings_dict["version_string"],
-            version_number=settings_dict["version_number"]
+            version_number=settings_dict["version_number"],
         )
 
     def __post_init__(self):
@@ -48,5 +48,5 @@ class Settings:
             fps=60,
             debug=True,
             version_string="vUNKNOWN",
-            version_number=(0, 0, 0)
+            version_number=(0, 0, 0),
         )
