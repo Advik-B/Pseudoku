@@ -1,10 +1,15 @@
 from yaml import safe_load, dump
 from classes import Settings
+from base64 import b64encode
 import os
+from json import dumps
 
 KB = 1024
 MB = 1024 * KB
 MAX_FILE_SIZE = 1 * MB
+
+def set_settings_in_env(settings: Settings) -> None:
+    os.environ["PSUDOKU_SETTINGS"] = b64encode(dumps(settings.to_dict()).encode()).decode()
 
 
 def load_settings() -> Settings:
@@ -12,6 +17,7 @@ def load_settings() -> Settings:
     if not os.path.exists("settings.yaml"):
         # Create the file with DEFAULT settings
         save_settings(Settings.DEFAULT)
+        set_settings_in_env(Settings.DEFAULT)
         return Settings.DEFAULT
 
     # Check the file size first
@@ -22,9 +28,10 @@ def load_settings() -> Settings:
 
     with open("settings.yaml", "r") as f:
         settings_dict = safe_load(f)
+    set_settings_in_env(Settings.from_dict(settings_dict))
     return Settings.from_dict(settings_dict)
 
 
 def save_settings(settings: Settings) -> None:
     with open("settings.yaml", "w") as f:
-        dump(settings, f)
+        dump(settings.to_dict(), f)
