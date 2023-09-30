@@ -32,7 +32,7 @@ def test_hex_to_hsv():
 
 
 def test_hsv_to_hex():
-    assert Colour.from_hsv(*(252, 100, 89)).to_hex() == "#3900E3".upper()
-    assert Colour.from_hsv((252, 39, 97)).to_hex() == "#b796f8".upper()
-    assert Colour.from_hsv(*(79, 100, 89)).to_hex() == "#aae300".upper()
-    assert Colour.from_hsv((11, 100, 89)).to_hex() == "#e33900".upper()
+    assert Colour.from_hsv(*(252, 100, 89)).to_hex() == "#3900E3".upper(), "Using *args"
+    assert Colour.from_hsv((252, 39, 97)).to_hex() == "#b796f8".upper(), "Using tuple"
+    assert Colour.from_hsv(*(79, 100, 89)).to_hex() == "#aae300".upper(), "Using *args"
+    assert Colour.from_hsv((11, 100, 89)).to_hex() == "#e33900".upper(), "Using tuple"
