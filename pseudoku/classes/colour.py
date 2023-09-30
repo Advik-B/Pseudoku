@@ -1,18 +1,20 @@
 from dataclasses import dataclass
 from typing import overload, Union, Tuple
 
+# Type aliases
 intConvertable = int | float | str
+ThreeNumbers = Union[
+    tuple[intConvertable, intConvertable, intConvertable],
+    list[intConvertable, intConvertable, intConvertable],
+    intConvertable,
+]
 
 
-def _intintuple_convert(t: tuple[intConvertable, intConvertable, intConvertable]) -> tuple[int, int, int]:
+def _intintuple_convert(t: tuple[intConvertable, intConvertable, intConvertable]) -> ThreeNumbers:
     return tuple(round(i) for i in t)
 
 
-def _floatintuple_convert(t: tuple[intConvertable, intConvertable, intConvertable]) -> tuple[float, float, float]:
-    return tuple(float(i) for i in t)
-
-
-def hex_to_rgb(hex: str) -> tuple[int, int, int]:
+def hex_to_rgb(hex: str) -> ThreeNumbers:
     """
     The hex_to_rgb function takes a hexadecimal color code as input and returns the corresponding RGB values.
 
@@ -22,7 +24,7 @@ def hex_to_rgb(hex: str) -> tuple[int, int, int]:
     return tuple(int(hex.lstrip("#")[i:i + 2], 16) for i in (0, 2, 4))
 
 
-def rgb_to_hex(rgb: tuple[int, int, int]) -> str:
+def rgb_to_hex(rgb: ThreeNumbers) -> str:
     """
     The rgb_to_hex function takes a tuple of three integers, representing the red, green and blue values of a color.
     It returns the hexadecimal representation of that color as a string.
@@ -34,18 +36,9 @@ def rgb_to_hex(rgb: tuple[int, int, int]) -> str:
     return "#" + "".join(hex(i)[2:].zfill(2).upper() for i in rgb)
 
 
-def _3inttotuple(x: int, y: int, z: int) -> tuple[int, int, int]:
-    return x, y, z
-
-
-def normalise_converted_rgb(rgb: tuple[float, float, float]) -> tuple[float, float, float]:
-    print(rgb)
-    return tuple(i / 255 for i in rgb)
-
-
 @dataclass
 class Colour:
-    rgb: tuple[int, int, int]
+    rgb: ThreeNumbers
     hex: str
 
     def __post_init__(self):
@@ -62,15 +55,14 @@ class Colour:
             if not 0 <= self.rgb[i] <= 255:
                 raise ValueError("RGB values must be between 0 and 255")
 
-
     @staticmethod
-    def from_rgb(*args: Union[tuple[int, int, int], list[int, int, int], int]) -> "Colour":
+    def from_rgb(*args: ThreeNumbers) -> "Colour":
         """
         The from_rgb function takes a tuple or list of three integers representing the red, green and blue values of a
-        color. It returns a Colour object with the corresponding RGB, hexadecimal and HSV values.
+        color. It returns a Colour object with the corresponding RGB, hexadecimal.
 
-        :param args: Union[tuple[int, int, int], list[int, int, int], int]: Specify the type of the parameter as a list or directly as three integers
-        :return: A Colour object with the corresponding RGB, hexadecimal and HSV values
+        :param args: Union[ThreeNumbers, list[int, int, int], int]: Specify the type of the parameter as a list or directly as three integers
+        :return: A Colour object with the corresponding RGB, hexadecimal
         """
         if len(args) == 1:
             if isinstance(args[0], (list, tuple)):
@@ -91,22 +83,21 @@ class Colour:
     @staticmethod
     def from_hex(hex: str) -> "Colour":
         """
-        The from_hex function takes a hexadecimal color code as input and returns a Colour object with the corresponding RGB, hexadecimal and HSV values.
+        The from_hex function takes a hexadecimal color code as input and returns a Colour object with the corresponding RGB, hexadecimal.
 
         :param hex: str: Specify the hexadecimal value of the color
-        :return: A Colour object with the corresponding RGB, hexadecimal and HSV values
+        :return: A Colour object with the corresponding RGB, hexadecimal
         """
         return Colour.from_rgb(hex_to_rgb(hex))
-
 
     @staticmethod
     def from_dict(colour_dict: dict[str, Union[str, list[int, int, int]]]) -> "Colour":
         """
-        The from_dict function takes a dictionary with keys "rgb", "hex" and "hsv" as input and returns a Colour
-        object with the corresponding RGB, hexadecimal and HSV values.
+        The from_dict function takes a dictionary with keys "rgb", "hex" as input and returns a Colour
+        object with the corresponding RGB, hexadecimal.
 
-        :param colour_dict: dict[str, Union[str, list[int, int, int]]]: Specify the type of the parameter as a dictionary with keys "rgb", "hex" and "hsv"
-        :return: A Colour object with the corresponding RGB, hexadecimal and HSV values
+        :param colour_dict: dict[str, Union[str, list[int, int, int]]]: Specify the type of the parameter as a dictionary with keys "rgb", "hex"
+        :return: A Colour object with the corresponding RGB, hexadecimal
         """
         try:
             return Colour(
@@ -114,8 +105,8 @@ class Colour:
                 hex=colour_dict["hex"],
             )
         except KeyError as e:
-            raise KeyError("Colour dictionary must contain keys 'rgb', 'hex' and 'hsv'") from e
+            raise KeyError("Colour dictionary must contain keys 'rgb', 'hex'") from e
 
     to_rgb = lambda self: self.rgb
     to_hex = lambda self: self.hex
-    to_dict = lambda self: {"rgb": self.rgb, "hex": self.hex, "hsv": self.hsv}
+    to_dict = lambda self: {"rgb": self.rgb, "hex": self.hex}
