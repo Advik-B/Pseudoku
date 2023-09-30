@@ -30,5 +30,4 @@ class Font:
         return {
             "filename": self.filename,
             "font_size": self.font_size,
-            "colour": self.colour.to_hex(),
         }
