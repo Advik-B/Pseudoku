@@ -18,7 +18,7 @@ def set_settings_in_env(settings: Settings) -> None:
 
 def get_settings_from_env() -> Settings:
     return Settings.from_dict(
-        safe_load(b64decode(os.environ["PSUDOKU_SETTINGS"].encode()).decode())
+        load(b64decode(os.environ["PSUDOKU_SETTINGS"].encode()).decode())
     )
 
 
