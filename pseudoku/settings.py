@@ -1,6 +1,6 @@
 import os
 
-from yaml import safe_load, dump
+from yaml import safe_load as load, safe_dump as dump
 from .classes import Settings, settings
 from base64 import b64encode, b64decode
 from json import dumps
@@ -41,9 +41,10 @@ def load_settings() -> Settings:
         )
 
     with open("settings.yaml", "r") as f:
-        settings_dict = safe_load(f)
-    set_settings_in_env(Settings.from_dict(settings_dict))
-    return Settings.from_dict(settings_dict)
+        settings_dict = load(f)
+        print(settings_dict)
+        set_settings_in_env(Settings.from_dict(settings_dict))
+        return Settings.from_dict(settings_dict)
 
 
 def save_settings(settings: Settings) -> None:
