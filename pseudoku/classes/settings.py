@@ -36,3 +36,17 @@ class Settings:
         self.debug = bool(self.debug)
         self.version_string = str(self.version_string)
         self.version_number = tuple(int(i) for i in self.version_number)
+
+    @staticmethod
+    @property
+    def DEFAULT() -> "Settings":
+        return Settings(
+            width=800,
+            height=600,
+            theme=Theme.DEFAULT,
+            vsync=True,
+            fps=60,
+            debug=True,
+            version_string="vUNKNOWN",
+            version_number=(0, 0, 0)
+        )
