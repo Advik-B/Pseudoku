@@ -3,24 +3,24 @@ from .colour import Colour
 from .font import Font
 
 DEFAULT_THEME = {
-    "background_colour": "#3900E3",
+    "background_colour": "#b796f8",
     "complementary_colour": "#aae300",
     "triad_colour": "#e33900",
-    "text_colour": "#b796f8",
+    "text_colour": "#e300aa",
     "number_font": {
         "filename": "assets/fonts/Roboto/RobotoMono-Regular.ttf",
         "font_size": 32,
-        "colour": "#b796f8",
+        "colour": "#e300aa",
     },
     "title_font": {
         "filename": "assets/fonts/Roboto/RobotoMono-Regular.ttf",
         "font_size": 64,
-        "colour": "#b796f8",
+        "colour": "#e300aa",
     },
     "subtitle_font": {
         "filename": "assets/fonts/Roboto/RobotoMono-Regular.ttf",
         "font_size": 48,
-        "colour": "#b796f8",
+        "colour": "#e300aa",
     },
 }
 
