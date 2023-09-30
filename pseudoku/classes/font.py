@@ -11,7 +11,6 @@ class Font:
     pg_font: PGfont
 
     def __post_init__(self):
-        init()
         self.pg_font = PGfont(self.filename, self.font_size)
 
     @staticmethod
