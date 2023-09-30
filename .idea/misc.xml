@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="Black">
+    <option name="enabledOnReformat" value="true" />
+    <option name="enabledOnSave" value="true" />
+    <option name="sdkUUID" value="b66bfa72-6468-4761-ade3-9edc44b9354d" />
+  </component>
   <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.11 (Psuedoku)" project-jdk-type="Python SDK" />
 </project>
