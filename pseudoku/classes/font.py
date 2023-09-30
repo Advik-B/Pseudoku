@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from .colour import Colour
-from pygame.font import Font as PGfont
+from pygame.font import Font as PGfont, init
 
 
 @dataclass
@@ -11,6 +11,7 @@ class Font:
     pg_font: PGfont
 
     def __post_init__(self):
+        init()
         self.pg_font = PGfont(self.filename, self.font_size)
 
     @staticmethod
@@ -24,3 +25,10 @@ class Font:
 
     def render(self, text: str, background: Colour, antialias: bool = True) -> PGfont:
         return self.pg_font.render(text, antialias, self.colour.rgb, background.rgb)
+
+    def to_dict(self) -> dict[str, str]:
+        return {
+            "filename": self.filename,
+            "font_size": self.font_size,
+            "colour": self.colour.to_hex(),
+        }
