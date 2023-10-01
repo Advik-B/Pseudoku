@@ -53,10 +53,6 @@ class Theme:
             """
             return Colour.from_hex(colour_hex)
 
-        print(theme_dict["complementary_colour"])
-        print(theme_dict["triad_colour"])
-        print(theme_dict["text_colour"])
-
         return Theme(
             background_colour=Colour.from_hex(theme_dict["background_colour"]),
             complementary_colour=Colour.from_hex(theme_dict["complementary_colour"]),
