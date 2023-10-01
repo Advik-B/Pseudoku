@@ -37,6 +37,7 @@ class Pseudoku:
         self.running = True
         self.clock = pygame.time.Clock()
         self.set_caption()
+
         # self.load_grids()
 
     def load_grids(self):
@@ -54,6 +55,17 @@ class Pseudoku:
     def init(self):
         pygame.init()
         self.settings.theme.load_fonts()
+        if self.settings.debug:
+            print(f"Screen Size: {self.settings.size}")
+            print(f"Screen Rect: {self.screen_rect}")
+            print(f"Monitors: {self.monitors}")
+            self.fps_text = self.settings.theme.number_font.render(
+                f"{self.clock.get_fps():.2f} FPS",
+                self.settings.theme.triad_colour,
+                antialias=True,
+            )
+            # Update the FPS text rect to be in the top left corner of the screen
+            self.fps_text_rect = self.fps_text.get_rect(topleft=(10, 10))
 
     def run(self):
         self.init()
@@ -75,12 +87,21 @@ class Pseudoku:
 
     def draw(self):
         self.screen.fill(self.settings.theme.background_colour.rgb)
+        if self.settings.debug:
+            self.screen.blit(self.fps_text, self.fps_text_rect)
 
     def update(self):
         if (
             self.settings.debug
         ):  # Update the caption if we are in debug mode to show the FPS
             self.set_caption()
+            # Update the FPS text
+            self.fps_text = self.settings.theme.number_font.render(
+                f"{self.clock.get_fps():.2f} FPS",
+                self.settings.theme.background_colour,
+                True,
+            )
+
         pygame.display.flip()
         self.clock.tick(self.settings.fps)
 
