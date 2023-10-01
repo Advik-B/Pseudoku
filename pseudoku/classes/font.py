@@ -10,7 +10,7 @@ class Font:
     colour: Colour
     pg_font: PGfont
 
-    def __post_init__(self):
+    def init(self):
         self.pg_font = PGfont(self.filename, self.font_size)
 
     @staticmethod
@@ -19,7 +19,7 @@ class Font:
             filename=font_dict["filename"],
             font_size=font_dict["font_size"],
             colour=Colour.from_dict(font_dict["colour"]),
-            pg_font=PGfont(font_dict["filename"], font_dict["font_size"]),
+            pg_font=None,
         )
 
     def render(self, text: str, background: Colour, antialias: bool = True) -> PGfont:
