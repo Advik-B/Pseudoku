@@ -63,8 +63,8 @@ class Settings:
 
 
 DEFAULT = Settings(
-    width=800,
-    height=600,
+    width=1200,
+    height=860,
     theme=DEFAULT_THEME,
     vsync=True,
     fps=60,
