@@ -4,15 +4,15 @@ fullscreen: false
 height: 860
 resizable: false
 theme:
-  background_colour: '#B796F8'
+  background_colour: '#282C34'
   complementary_colour: '#AAE300'
   number_font:
-    filename: null
+    filename: assets/fonts/JetBrainsMono-Bold.ttf
     font_size: 32
   subtitle_font:
     filename: null
     font_size: 48
-  text_colour: '#E300AA'
+  text_colour: '#AAE300'
   title_font:
     filename: null
     font_size: 64
