@@ -1,6 +1,8 @@
 debug: true
 fps: 60
-height: 600
+fullscreen: false
+height: 860
+resizable: false
 theme:
   background_colour: '#B796F8'
   complementary_colour: '#AAE300'
@@ -21,4 +23,4 @@ version_number:
 - 0
 version_string: vUNKNOWN
 vsync: true
-width: 800
+width: 1200
