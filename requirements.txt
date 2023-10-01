@@ -1,2 +1,3 @@
 pygame-ce
 pyyaml
+screeninfo
