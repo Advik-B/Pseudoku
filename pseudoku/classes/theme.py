@@ -9,15 +9,15 @@ DEFAULT_THEME = {
     "triad_colour": {"hex": "#e33900", "rgb": [227, 57, 0]},
     "text_colour": {"hex": "#e300aa", "rgb": [227, 0, 170]},
     "number_font": {
-        "filename": ROBOTO,
+        "filename": None,
         "font_size": 32,
     },
     "title_font": {
-        "filename": ROBOTO,
+        "filename": None,
         "font_size": 64,
     },
     "subtitle_font": {
-        "filename": ROBOTO,
+        "filename": None,
         "font_size": 48,
     },
 }
@@ -64,6 +64,15 @@ class Theme:
             "title_font": self.title_font.to_dict(),
             "subtitle_font": self.subtitle_font.to_dict(),
         }
+
+    def load_fonts(self):
+        """
+        Load the fonts, use this after pygame.init() has been called
+        :return:
+        """
+        self.number_font.init()
+        self.title_font.init()
+        self.subtitle_font.init()
 
 
 DEFAULT = Theme.from_dict(DEFAULT_THEME)
