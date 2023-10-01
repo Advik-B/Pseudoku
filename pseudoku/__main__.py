@@ -31,10 +31,20 @@ class Pseudoku:
         if self.settings.resizable:
             flags.append(pygame.RESIZABLE)
         self.screen = display.set_mode(self.settings.size, or_flags(flags))
+
         self.screen_rect = self.screen.get_rect()
 
         self.running = True
         self.clock = pygame.time.Clock()
+        self.set_caption()
+
+    def set_caption(self):
+        if self.settings.debug:
+            display.set_caption(
+                f"Pseudoku {self.settings.version_string} (DEBUG) - {self.clock.get_fps():.2f} FPS | By: Advik"
+            )
+        else:
+            display.set_caption(f"Pseudoku {self.settings.version_string} | By: Advik")
 
     def init(self):
         pygame.init()
@@ -62,6 +72,10 @@ class Pseudoku:
         self.screen.fill(self.settings.theme.background_colour.rgb)
 
     def update(self):
+        if (
+            self.settings.debug
+        ):  # Update the caption if we are in debug mode to show the FPS
+            self.set_caption()
         pygame.display.flip()
         self.clock.tick(self.settings.fps)
 
