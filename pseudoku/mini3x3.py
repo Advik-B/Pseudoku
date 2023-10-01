@@ -19,7 +19,7 @@ class Mini3x3(Sprite):
         self.image = Surface((self.width, self.height))
 
     def draw(self) -> None:
-        self.image.fill(self.settings.theme.background_colour)
+        self.image.fill(self.settings.theme.background_colour.rgb)
         self.draw_grid()
         self.draw_numbers()
 
@@ -27,14 +27,14 @@ class Mini3x3(Sprite):
         for i in range(1, 3):
             draw.line(
                 self.image,
-                self.settings.theme.triad_colour,
+                self.settings.theme.triad_colour.rgb,
                 (0, self.height // 3 * i),
                 (self.width, self.height // 3 * i),
                 1,
             )
             draw.line(
                 self.image,
-                self.settings.theme.triad_colour,
+                self.settings.theme.triad_colour.rgb,
                 (self.width // 3 * i, 0),
                 (self.width // 3 * i, self.height),
                 1,
