@@ -1,29 +1,19 @@
 import random
 
 
-def is_valid(board, row, col, num):
-    return (
-        all(board[row][i] != num for i in range(9))
-        and all(board[i][col] != num for i in range(9))
-        and all(
-            board[row // 3 * 3 + i][col // 3 * 3 + j] != num
-            for i in range(3)
-            for j in range(3)
-        )
-    )
-
-
-def solve_sudoku(board):
+def solve_sudoku(board, iterations=1):
     for row in range(9):
         for col in range(9):
             if board[row][col] == 0:
                 for num in range(1, 10):
-                    if is_valid(board, row, col, num):
+                    if ai_is_valid(board, row, col, num):
                         board[row][col] = num
-                        if solve_sudoku(board):
+                        if solve_sudoku(board, iterations + 1):
                             return True
                         board[row][col] = 0
                 return False
+
+    print(f"Solved in {iterations} iterations")
     return True
 
 
@@ -75,7 +65,7 @@ def is_valid_solution(board):
                 return False
             num = board[i][j]
             board[i][j] = 0
-            if not is_valid(board, i, j, num):
+            if not ai_is_valid(board, i, j, num):
                 return False
             board[i][j] = num
     return True
@@ -93,7 +83,7 @@ def play_sudoku():
         difficulty = 5
 
     sudoku_board = generate_sudoku(difficulty)
-    print("\nGenerated Sudoku Board (Difficulty Level: {}):".format(difficulty))
+    print(f"\nGenerated Sudoku Board (Difficulty Level: {difficulty}):")
     print_board(sudoku_board)
 
     while True:
@@ -127,16 +117,18 @@ def ai_solver(board):
                 for num in range(1, 10):
                     if ai_is_valid(board, row, col, num):
                         board[row][col] = num
-                        yield board
-                        yield from ai_solver(board)
+                        if solve_sudoku(board):
+                            return  # Puzzle is solved, exit the function
                         board[row][col] = 0
 
 
 def solve_with_ai(board):
-    for solution in ai_solver(board):
-        print("Solving step:")
-        print_board(solution)
-        input("Press Enter to continue...")
+    print(board)
+    ai_solver(board)
+    print("Sudoku puzzle solved:")
+    print_board(board)
+    print(board)
+    quit()
 
 
 if __name__ == "__main__":
