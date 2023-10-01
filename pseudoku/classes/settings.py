@@ -9,11 +9,15 @@ class Settings:
     theme: Theme
     vsync: bool
     fps: int
+    resizable: bool
+    full_screen: bool
 
     # Debug info
     debug: bool = False
     version_string: str = "v0.1.0"
     version_number: tuple[int, int, int] = (0, 1, 0)
+
+    size: tuple[int, int] = None
 
     @staticmethod
     def from_dict(settings_dict: dict[str, str]) -> "Settings":
@@ -26,6 +30,9 @@ class Settings:
             debug=settings_dict["debug"],
             version_string=settings_dict["version_string"],
             version_number=settings_dict["version_number"],
+            size=(settings_dict["width"], settings_dict["height"]),
+            resizable=settings_dict["resizable"],
+            full_screen=settings_dict["fullscreen"],
         )
 
     def __post_init__(self):
@@ -37,6 +44,9 @@ class Settings:
         self.version_string = str(self.version_string)
         self.version_number = tuple(int(i) for i in self.version_number)
 
+        self.size = (self.width, self.height)
+        self.full_screen = False if self.resizable else bool(self.full_screen)
+
     def to_dict(self) -> dict[str, str]:
         return {
             "width": self.width,
@@ -47,6 +57,8 @@ class Settings:
             "debug": self.debug,
             "version_string": self.version_string,
             "version_number": self.version_number,
+            "resizable": self.resizable,
+            "fullscreen": self.full_screen,
         }
 
 
@@ -59,4 +71,6 @@ DEFAULT = Settings(
     debug=True,
     version_string="vUNKNOWN",
     version_number=(0, 0, 0),
+    resizable=True,
+    full_screen=False,
 )
