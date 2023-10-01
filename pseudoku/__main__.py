@@ -1,8 +1,8 @@
-from .mini3x3 import Mini3x3
-from .settings import Settings, load_settings, save_settings
-from screeninfo import get_monitors
 import pygame
 from pygame import display
+
+from screeninfo import get_monitors
+from .settings import Settings, load_settings, save_settings
 
 
 def or_flags(flags: list[int]) -> int:
@@ -37,21 +37,11 @@ class Pseudoku:
         self.running = True
         self.clock = pygame.time.Clock()
         self.set_caption()
-        self.load_grids()
+        # self.load_grids()
 
     def load_grids(self):
         # Load the 9 mini 3x3 grids
         self.mini_grids = []
-        for i in range(3):
-            for j in range(3):
-                self.mini_grids.append(
-                    Mini3x3(
-                        self.settings,
-                        self.screen_rect.width // 3 * j,
-                        self.screen_rect.height // 3 * i,
-                        [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
-                    )
-                )
 
     def set_caption(self):
         if self.settings.debug:
@@ -85,8 +75,6 @@ class Pseudoku:
 
     def draw(self):
         self.screen.fill(self.settings.theme.background_colour.rgb)
-        for grid in self.mini_grids:
-            grid.draw()
 
     def update(self):
         if (
