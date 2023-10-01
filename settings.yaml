@@ -5,14 +5,14 @@ theme:
   background_colour: '#B796F8'
   complementary_colour: '#AAE300'
   number_font:
-    filename: assets/fonts/Roboto/Roboto-Regular.ttf
+    filename: ''
     font_size: 32
   subtitle_font:
-    filename: assets/fonts/Roboto/Roboto-Regular.ttf
+    filename: ''
     font_size: 48
   text_colour: '#E300AA'
   title_font:
-    filename: assets/fonts/Roboto/Roboto-Regular.ttf
+    filename: ''
     font_size: 64
   triad_colour: '#E33900'
 version_number:
