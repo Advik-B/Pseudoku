@@ -27,14 +27,14 @@ class Mini3x3(Sprite):
         for i in range(1, 3):
             draw.line(
                 self.image,
-                self.settings.theme.grid_colour,
+                self.settings.theme.triad_colour,
                 (0, self.height // 3 * i),
                 (self.width, self.height // 3 * i),
                 1,
             )
             draw.line(
                 self.image,
-                self.settings.theme.grid_colour,
+                self.settings.theme.triad_colour,
                 (self.width // 3 * i, 0),
                 (self.width // 3 * i, self.height),
                 1,
