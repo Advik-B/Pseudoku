@@ -42,7 +42,6 @@ def load_settings() -> Settings:
 
     with open("settings.yaml", "r") as f:
         settings_dict = load(f)
-        print(settings_dict)
         set_settings_in_env(Settings.from_dict(settings_dict))
         return Settings.from_dict(settings_dict)
 
