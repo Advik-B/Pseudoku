@@ -87,7 +87,6 @@ class Pseudoku:
         self.screen.fill(self.settings.theme.background_colour.rgb)
         for grid in self.mini_grids:
             grid.draw()
-            self.screen.blit(grid.image, grid.rect)
 
     def update(self):
         if (
