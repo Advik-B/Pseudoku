@@ -18,7 +18,7 @@ class Font:
         return Font(
             filename=font_dict["filename"],
             font_size=font_dict["font_size"],
-            colour=Colour.from_dict(font_dict["colour"]),
+            colour=Colour.from_hex(font_dict["colour"]),
             pg_font=None,
         )
 
