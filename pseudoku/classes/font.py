@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from .colour import Colour
-from pygame.font import Font as PGfont, init
+from pygame.font import Font as PGfont
 
 
 @dataclass
