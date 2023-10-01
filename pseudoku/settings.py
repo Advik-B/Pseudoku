@@ -7,7 +7,7 @@ from json import dumps
 
 KB = 1024
 MB = 1024 * KB
-MAX_FILE_SIZE = 1 * MB
+MAX_FILE_SIZE = 5 * MB
 
 
 def set_settings_in_env(settings: Settings) -> None:
