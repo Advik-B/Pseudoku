@@ -17,7 +17,6 @@ class Settings:
 
     @staticmethod
     def from_dict(settings_dict: dict[str, str]) -> "Settings":
-        print(settings_dict)
         return Settings(
             width=settings_dict["width"],
             height=settings_dict["height"],
