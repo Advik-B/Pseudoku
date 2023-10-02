@@ -23,23 +23,25 @@ class Pseudoku:
     def __init__(self):
         self.settings = load_settings()
         self.monitors = get_monitors()[0]
-        flags = []
-        if self.settings.vsync:
-            flags.append(pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.SCALED)
-        if self.settings.full_screen:
-            self.settings.size = (self.monitors.width, self.monitors.height)
-            flags.append(pygame.FULLSCREEN)
-        if self.settings.resizable:
-            flags.append(pygame.RESIZABLE)
-        self.screen = display.set_mode(self.settings.size, or_flags(flags))
-
-        self.screen_rect = self.screen.get_rect()
-
+        self.set_display()
         self.running = True
         self.clock = pygame.time.Clock()
         self.set_caption()
-
+        self.grid_size_divisor = 40
         # self.load_grids()
+
+    def set_display(self):
+        self.flags = []
+        if self.settings.vsync:
+            self.flags.append(pygame.HWSURFACE | pygame.DOUBLEBUF)
+        if self.settings.full_screen:
+            self.settings.size = (self.monitors.width, self.monitors.height)
+            self.flags.append(pygame.FULLSCREEN)
+        if self.settings.resizable:
+            self.flags.append(pygame.RESIZABLE)
+
+        self.screen = display.set_mode(self.settings.size, or_flags(self.flags))
+        self.screen_rect = self.screen.get_rect()
 
     def load_grids(self):
         # Load the 9 mini 3x3 grids
@@ -67,12 +69,18 @@ class Pseudoku:
             )
             # Update the FPS text rect to be in the top left corner of the screen
             self.fps_text_rect = self.fps_text.get_rect(topleft=(10, 10))
+        minsizex = min(self.screen_rect.width, self.screen_rect.height)
 
+        # Create the grid with default settings and values, this will be changed later by grepos function
         self.grid = SudokuGrid(
             screen=self.screen,
             settings=self.settings,
             x=self.screen_rect.centerx,
             y=self.screen_rect.centery,
+            size=(
+                minsizex // self.grid_size_divisor,
+                minsizex // self.grid_size_divisor,
+            ),
         )
 
     def run(self):
@@ -125,14 +133,21 @@ class Pseudoku:
         pygame.quit()
 
     def resize(self, size: tuple[int, int]):
+        print(f"Resizing to {size}")
+        self.settings.resizable = True
         self.settings.size = size
-        self.screen = display.set_mode(self.settings.size, or_flags(flags))
-        self.screen_rect = self.screen.get_rect()
-        self.grid = SudokuGrid(
-            screen=self.screen,
-            settings=self.settings,
-            x=self.screen_rect.centerx,
-            y=self.screen_rect.centery,
+        self.set_display()
+        self.grepos()
+
+    def grepos(self):
+        minsizex = min(self.screen_rect.width, self.screen_rect.height)
+        self.grid.repos(
+            self.screen_rect.centerx,
+            self.screen_rect.centery,
+            size=(
+                minsizex // self.grid_size_divisor,
+                minsizex // self.grid_size_divisor,
+            ),
         )
 
 
