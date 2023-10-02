@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from .theme import Theme, DEFAULT as DEFAULT_THEME
+from typing import Any
 
 
 @dataclass
@@ -60,6 +61,9 @@ class Settings:
             "resizable": self.resizable,
             "fullscreen": self.full_screen,
         }
+
+    def _replace(self, key: str, value: Any) -> None:
+        self.__dict__[key] = value
 
 
 DEFAULT = Settings(
