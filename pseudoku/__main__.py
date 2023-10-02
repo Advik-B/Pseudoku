@@ -3,6 +3,7 @@ from pygame import display
 
 from screeninfo import get_monitors
 from .settings import Settings, load_settings, save_settings
+from .pseudoku_backend import SudokuGrid
 
 
 def or_flags(flags: list[int]) -> int:
@@ -67,6 +68,8 @@ class Pseudoku:
             # Update the FPS text rect to be in the top left corner of the screen
             self.fps_text_rect = self.fps_text.get_rect(topleft=(10, 10))
 
+        self.grid = SudokuGrid(screen=self.screen, settings=self.settings)
+
     def run(self):
         self.init()
         self.main_loop()
@@ -89,6 +92,9 @@ class Pseudoku:
         self.screen.fill(self.settings.theme.background_colour.rgb)
         if self.settings.debug:
             self.screen.blit(self.fps_text, self.fps_text_rect)
+        self.grid.draw()
+        pygame.display.flip()
+        self.clock.tick(self.settings.fps)
 
     def update(self):
         if (
@@ -102,8 +108,8 @@ class Pseudoku:
                 True,
             )
 
-        pygame.display.flip()
-        self.clock.tick(self.settings.fps)
+        # Update the grid
+        self.grid.update()
 
     def quit(self):
         save_settings(self.settings)
