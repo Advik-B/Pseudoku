@@ -2,7 +2,7 @@ debug: true
 fps: 60
 fullscreen: false
 height: 860
-resizable: false
+resizable: true
 theme:
   background_colour: '#282C34'
   complementary_colour: '#AAE300'
