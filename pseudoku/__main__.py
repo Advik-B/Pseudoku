@@ -3,7 +3,7 @@ from pygame import display
 
 from screeninfo import get_monitors
 from .settings import Settings, load_settings, save_settings
-from .pseudoku_backend import SudokuGrid
+from .pseudoku_grid import SudokuGrid
 
 
 def or_flags(flags: list[int]) -> int:
