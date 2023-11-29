@@ -3,7 +3,7 @@
   <component name="Black">
     <option name="enabledOnReformat" value="true" />
     <option name="enabledOnSave" value="true" />
-    <option name="sdkUUID" value="b66bfa72-6468-4761-ade3-9edc44b9354d" />
+    <option name="sdkName" value="Python 3.12 (Psuedoku)" />
   </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.11 (Psuedoku)" project-jdk-type="Python SDK" />
+  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.12 (Psuedoku)" project-jdk-type="Python SDK" />
 </project>
