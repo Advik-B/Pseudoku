@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from .theme import Theme, DEFAULT as DEFAULT_THEME
+from .theme import Theme, DEFAULT2 as DEFAULT_THEME
 from typing import Any
 
 
