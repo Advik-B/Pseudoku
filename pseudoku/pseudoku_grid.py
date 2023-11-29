@@ -2,6 +2,7 @@ import pygame
 from .classes import Settings, settings as stngs
 from .sudoku import Sudoku
 
+
 class SudokuGrid:
     def __init__(
         self,
@@ -40,24 +41,32 @@ class SudokuGrid:
             self.screen, self.border_colour.rgb, self.rect, self.border_width
         )
 
-        # Calculate the center of the rectangle
-        center_x = self.rect.centerx
-        center_y = self.rect.centery
-
         # Draw the 3x3 grid lines inside the sudoku grid, centered within the rectangle
         for i in range(1, 3):
             pygame.draw.line(
                 self.screen,
                 self.border_colour.rgb,
-                (center_x - self.width // 2 + i * self.width // 3, self.rect.top),
-                (center_x - self.width // 2 + i * self.width // 3, self.rect.bottom),
+                (
+                    self.rect.centerx - self.width // 2 + i * self.width // 3,
+                    self.rect.top,
+                ),
+                (
+                    self.rect.centerx - self.width // 2 + i * self.width // 3,
+                    self.rect.bottom,
+                ),
                 self.border_width,
             )
             pygame.draw.line(
                 self.screen,
                 self.border_colour.rgb,
-                (self.rect.left, center_y - self.height // 2 + i * self.height // 3),
-                (self.rect.right, center_y - self.height // 2 + i * self.height // 3),
+                (
+                    self.rect.left,
+                    self.rect.centery - self.height // 2 + i * self.height // 3,
+                ),
+                (
+                    self.rect.right,
+                    self.rect.centery - self.height // 2 + i * self.height // 3,
+                ),
                 self.border_width,
             )
 
@@ -68,20 +77,29 @@ class SudokuGrid:
                 pygame.draw.line(
                     self.screen,
                     self.border_colour.rgb,
-                    (center_x - self.width // 2 + i * self.width // 9, self.rect.top),
-                    (center_x - self.width // 2 + i * self.width // 9, self.rect.bottom),
+                    (
+                        self.rect.centerx - self.width // 2 + i * self.width // 9,
+                        self.rect.top,
+                    ),
+                    (
+                        self.rect.centerx - self.width // 2 + i * self.width // 9,
+                        self.rect.bottom,
+                    ),
                     cell_border_width,
                 )
                 pygame.draw.line(
                     self.screen,
                     self.border_colour.rgb,
-                    (self.rect.left, center_y - self.height // 2 + i * self.height // 9),
-                    (self.rect.right, center_y - self.height // 2 + i * self.height // 9),
+                    (
+                        self.rect.left,
+                        self.rect.centery - self.height // 2 + i * self.height // 9,
+                    ),
+                    (
+                        self.rect.right,
+                        self.rect.centery - self.height // 2 + i * self.height // 9,
+                    ),
                     cell_border_width,
                 )
-
-
-
 
     def generate_sudoku(self):
         pass
