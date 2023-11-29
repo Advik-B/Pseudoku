@@ -15,7 +15,8 @@ def main():
 
     while not sudoku.is_solved():
         print(
-            "\nEnter 'x y value' to set a value (e.g., '2 3 5'), 'solve' to auto-solve, 'step' for one step, or 'exit' to quit:"
+            "\nEnter 'x y value' to set a value (e.g., '2 3 5'), 'solve' to auto-solve, 'step' for one step, "
+            "or 'exit' to quit:"
         )
         user_input = input("> ")
 
