@@ -112,10 +112,8 @@ class SudokuGrid:
                     )
                     text_rect = text.get_rect(
                         center=(
-                            self.rect.centerx - self.width // 2 + j * self.width // 9
-                            + self.width // 18,
-                            self.rect.centery - self.height // 2 + i * self.height // 9
-                            + self.height // 18,
+                            self.rect.left + (j * self.rect.width // 9) + (self.rect.width // 18),
+                            self.rect.top + (i * self.rect.height // 9) + (self.rect.height // 18),
                         )
                     )
                     self.screen.blit(text, text_rect)
