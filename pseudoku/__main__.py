@@ -2,7 +2,7 @@ import pygame
 from pygame import display
 
 from screeninfo import get_monitors
-from .settings import Settings, load_settings, save_settings
+from .classes.settings import Settings, DEFAULT as DEFAULT_SETTINGS
 from .pseudoku_grid import SudokuGrid
 
 
@@ -21,7 +21,7 @@ def or_flags(flags: list[int]) -> int:
 
 class Pseudoku:
     def __init__(self):
-        self.settings = load_settings()
+        self.settings = DEFAULT_SETTINGS
         self.monitors = get_monitors()[0]
         self.set_display()
         self.running = True
@@ -62,7 +62,7 @@ class Pseudoku:
             print(f"Screen Size: {self.settings.size}")
             print(f"Screen Rect: {self.screen_rect}")
             print(f"Monitors: {self.monitors}")
-            self.fps_text = self.settings.theme.number_font.render(
+            self.fps_text = self.settings.theme.psuedoku_font.render(
                 f"{self.clock.get_fps():.2f} FPS",
                 self.settings.theme.triad_colour,
                 antialias=True,
@@ -119,7 +119,7 @@ class Pseudoku:
         ):  # Update the caption if we are in debug mode to show the FPS
             self.set_caption()
             # Update the FPS text
-            self.fps_text = self.settings.theme.number_font.render(
+            self.fps_text = self.settings.theme.psuedoku_font.render(
                 f"{self.clock.get_fps():.2f} FPS",
                 self.settings.theme.background_colour,
                 True,
@@ -129,7 +129,6 @@ class Pseudoku:
         self.grid.update()
 
     def quit(self):
-        save_settings(self.settings)
         pygame.quit()
 
     def resize(self, size: tuple[int, int]):
