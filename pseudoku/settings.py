@@ -47,5 +47,6 @@ def load_settings() -> Settings:
 
 
 def save_settings(settings: Settings) -> None:
-    with open("settings.yaml", "w") as f:
-        dump(settings.to_dict(), f)
+    pass
+    # with open("settings.yaml", "w") as f:
+    #     dump(settings.to_dict(), f)
