@@ -1,0 +1,61 @@
+# pseudoku/.github/workflows/codeql.yml
+
+name: CodeQL
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    permissions:
+      actions: read
+      contents: read
+      metadata: read
+      securityEvents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up CodeQL
+        uses: github/codeql-action/init@v1
+        with:
+          languages: python
+
+      - name: Build and analyze
+        uses: github/codeql-action/analyze@v1
+
+      - name: Upload SARIF results
+        uses: github/codeql-action/upload-sarif@v1
+        with:
+          sarif_file: codeql-results.sarif
+
+      - name: Publish code scanning alerts
+        uses: github/codeql-action/upload-alerts@v1
+
+      - name: Publish code scanning SARIF
+        uses: github/codeql-action/upload-sarif@v1
+        with:
+          sarif_file: codeql-results.sarif
+
+      - name: Publish code scanning annotations
+        uses: github/codeql-action/upload-annotations@v1
+        with:
+          annotations_file: codeql-results.sarif
+
+      - name: Publish code scanning SARIF
+        uses: github/codeql-action/upload-sarif@v1
+        with:
+          sarif_file: codeql-results.sarif
+
+      - name: Publish code scanning annotations
+        uses: github/codeql-action/upload-annotations@v1
+        with:
+          annotations_file: codeql-results.sarif
